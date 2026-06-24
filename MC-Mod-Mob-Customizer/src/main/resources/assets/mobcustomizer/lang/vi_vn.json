@@ -1,0 +1,46 @@
+{
+  "mobcustomizer.configuration.zombie": "Cài đặt Zombie",
+  "mobcustomizer.configuration.creeper": "Cài đặt Creeper",
+  "mobcustomizer.configuration.skeleton": "Cài đặt Skeleton",
+  "mobcustomizer.configuration.spider": "Cài đặt Spider",
+  "mobcustomizer.configuration.enderman": "Cài đặt Enderman",
+  "mobcustomizer.configuration.witch": "Cài đặt Witch",
+  "mobcustomizer.configuration.slime": "Cài đặt Slime",
+  
+  "mobcustomizer.config.allowZombieSpawn": "Cho phép spawn",
+  "mobcustomizer.config.zombieWeightMultiplier": "Tỷ lệ spawn (1-50x)",
+  "mobcustomizer.config.zombieMinGroupSize": "Nhóm tối thiểu",
+  "mobcustomizer.config.zombieMaxGroupSize": "Nhóm tối đa",
+  "mobcustomizer.config.zombieFollowRange": "Phạm vi phát hiện",
+  "mobcustomizer.config.zombieMovementSpeed": "Tốc độ di chuyển",
+  "mobcustomizer.config.zombieAttackDamage": "Sát thương",
+  
+  "mobcustomizer.config.allowCreeperSpawn": "Cho phép spawn",
+  "mobcustomizer.config.creeperFollowRange": "Phạm vi phát hiện",
+  "mobcustomizer.config.creeperMovementSpeed": "Tốc độ di chuyển",
+  "mobcustomizer.config.creeperExplosionRadius": "Bán kính nổ",
+  
+  "mobcustomizer.config.allowSkeletonSpawn": "Cho phép spawn",
+  "mobcustomizer.config.skeletonFollowRange": "Phạm vi phát hiện",
+  "mobcustomizer.config.skeletonMovementSpeed": "Tốc độ di chuyển",
+  "mobcustomizer.config.skeletonAttackDamage": "Sát thương tên",
+  
+  "mobcustomizer.config.allowSpiderSpawn": "Cho phép spawn",
+  "mobcustomizer.config.spiderFollowRange": "Phạm vi phát hiện",
+  "mobcustomizer.config.spiderMovementSpeed": "Tốc độ di chuyển",
+  "mobcustomizer.config.spiderAttackDamage": "Sát thương",
+  
+  "mobcustomizer.config.allowEndermanSpawn": "Cho phép spawn",
+  "mobcustomizer.config.endermanFollowRange": "Phạm vi phát hiện",
+  "mobcustomizer.config.endermanMovementSpeed": "Tốc độ di chuyển",
+  "mobcustomizer.config.endermanAttackDamage": "Sát thương",
+  
+  "mobcustomizer.config.allowWitchSpawn": "Cho phép spawn",
+  "mobcustomizer.config.witchFollowRange": "Phạm vi phát hiện",
+  "mobcustomizer.config.witchMovementSpeed": "Tốc độ di chuyển",
+  
+  "mobcustomizer.config.allowSlimeSpawn": "Cho phép spawn",
+  "mobcustomizer.config.slimeFollowRange": "Phạm vi phát hiện",
+  "mobcustomizer.config.slimeMovementSpeed": "Tốc độ di chuyển",
+  "mobcustomizer.config.slimeAttackDamage": "Sát thương"
+}

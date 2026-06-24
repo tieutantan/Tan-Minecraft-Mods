@@ -1,0 +1,46 @@
+{
+  "mobcustomizer.configuration.zombie": "Zombie Settings",
+  "mobcustomizer.configuration.creeper": "Creeper Settings",
+  "mobcustomizer.configuration.skeleton": "Skeleton Settings",
+  "mobcustomizer.configuration.spider": "Spider Settings",
+  "mobcustomizer.configuration.enderman": "Enderman Settings",
+  "mobcustomizer.configuration.witch": "Witch Settings",
+  "mobcustomizer.configuration.slime": "Slime Settings",
+  
+  "mobcustomizer.config.allowZombieSpawn": "Allow Spawn",
+  "mobcustomizer.config.zombieWeightMultiplier": "Spawn Weight (1-50x)",
+  "mobcustomizer.config.zombieMinGroupSize": "Min Group Size",
+  "mobcustomizer.config.zombieMaxGroupSize": "Max Group Size",
+  "mobcustomizer.config.zombieFollowRange": "Detection Range",
+  "mobcustomizer.config.zombieMovementSpeed": "Movement Speed",
+  "mobcustomizer.config.zombieAttackDamage": "Attack Damage",
+  
+  "mobcustomizer.config.allowCreeperSpawn": "Allow Spawn",
+  "mobcustomizer.config.creeperFollowRange": "Detection Range",
+  "mobcustomizer.config.creeperMovementSpeed": "Movement Speed",
+  "mobcustomizer.config.creeperExplosionRadius": "Explosion Radius",
+  
+  "mobcustomizer.config.allowSkeletonSpawn": "Allow Spawn",
+  "mobcustomizer.config.skeletonFollowRange": "Detection Range",
+  "mobcustomizer.config.skeletonMovementSpeed": "Movement Speed",
+  "mobcustomizer.config.skeletonAttackDamage": "Arrow Damage",
+  
+  "mobcustomizer.config.allowSpiderSpawn": "Allow Spawn",
+  "mobcustomizer.config.spiderFollowRange": "Detection Range",
+  "mobcustomizer.config.spiderMovementSpeed": "Movement Speed",
+  "mobcustomizer.config.spiderAttackDamage": "Attack Damage",
+  
+  "mobcustomizer.config.allowEndermanSpawn": "Allow Spawn",
+  "mobcustomizer.config.endermanFollowRange": "Detection Range",
+  "mobcustomizer.config.endermanMovementSpeed": "Movement Speed",
+  "mobcustomizer.config.endermanAttackDamage": "Attack Damage",
+  
+  "mobcustomizer.config.allowWitchSpawn": "Allow Spawn",
+  "mobcustomizer.config.witchFollowRange": "Detection Range",
+  "mobcustomizer.config.witchMovementSpeed": "Movement Speed",
+  
+  "mobcustomizer.config.allowSlimeSpawn": "Allow Spawn",
+  "mobcustomizer.config.slimeFollowRange": "Detection Range",
+  "mobcustomizer.config.slimeMovementSpeed": "Movement Speed",
+  "mobcustomizer.config.slimeAttackDamage": "Attack Damage"
+}

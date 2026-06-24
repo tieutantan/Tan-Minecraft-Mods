@@ -1,0 +1,13 @@
+{
+  "itemGroup.autotransferitems": "Example Mod Tab",
+  "block.autotransferitems.example_block": "Example Block",
+  "item.autotransferitems.example_item": "Example Item",
+
+  "autotransferitems.configuration.title": "Auto Transfer Items Configs",
+  "autotransferitems.configuration.section.autotransferitems.common.toml": "Auto Transfer Items Configs",
+  "autotransferitems.configuration.section.autotransferitems.common.toml.title": "Auto Transfer Items Configs",
+  "autotransferitems.configuration.items": "Item List",
+  "autotransferitems.configuration.logDirtBlock": "Log Dirt Block",
+  "autotransferitems.configuration.magicNumberIntroduction": "Magic Number Text",
+  "autotransferitems.configuration.magicNumber": "Magic Number"
+}
