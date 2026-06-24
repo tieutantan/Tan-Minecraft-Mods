@@ -1,0 +1,10 @@
+{
+  "key.autodeleteitems.config": "Open Auto Delete Items Config",
+
+  "autodeleteitems.configuration.title": "Auto Delete Items Configs",
+  "autodeleteitems.configuration.items": "Item List",
+
+  "autodeleteitems.configuration.general": "General",
+  "autodeleteitems.configuration.general.deleteIntervalMinutes": "Delete Interval (minutes)",
+  "autodeleteitems.configuration.general.deleteIntervalMinutes.tooltip": "How often the mod scans and deletes items from your inventory"
+}
