@@ -11,6 +11,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -26,6 +27,14 @@ public class MobCustomizer {
         NeoForge.EVENT_BUS.register(this);
         
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC, "mobcustomizer.toml");
+        
+        // Auto-refresh spawn cache when config changes (e.g., after "Done" in config GUI)
+        modEventBus.addListener(ModConfigEvent.Reloading.class, event -> {
+            if (event.getConfig().getSpec() == Config.SPEC) {
+                SpawnEventHandler.refreshCache();
+                LOGGER.info("Config reloaded — spawn cache refreshed");
+            }
+        });
         
         LOGGER.info("Mob Customizer mod initializing...");
     }

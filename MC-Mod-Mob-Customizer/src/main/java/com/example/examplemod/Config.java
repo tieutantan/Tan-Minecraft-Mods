@@ -100,7 +100,7 @@ public class Config {
         ALLOW_CREEPER_SPAWN = BUILDER
                 .comment("Allow creepers to spawn")
                 .translation("mobcustomizer.config.allowCreeperSpawn")
-                .define("allowSpawn", true);
+                .define("allowSpawn", false);
 
         CREEPER_FOLLOW_RANGE = BUILDER
                 .comment("Detection range (vanilla: 16)")
@@ -126,7 +126,7 @@ public class Config {
         ALLOW_SKELETON_SPAWN = BUILDER
                 .comment("Allow skeletons to spawn")
                 .translation("mobcustomizer.config.allowSkeletonSpawn")
-                .define("allowSpawn", true);
+                .define("allowSpawn", false);
 
         SKELETON_FOLLOW_RANGE = BUILDER
                 .comment("Detection range (vanilla: 15)")
@@ -152,7 +152,7 @@ public class Config {
         ALLOW_SPIDER_SPAWN = BUILDER
                 .comment("Allow spiders to spawn")
                 .translation("mobcustomizer.config.allowSpiderSpawn")
-                .define("allowSpawn", true);
+                .define("allowSpawn", false);
 
         SPIDER_FOLLOW_RANGE = BUILDER
                 .comment("Detection range (vanilla: 16)")
@@ -178,7 +178,7 @@ public class Config {
         ALLOW_ENDERMAN_SPAWN = BUILDER
                 .comment("Allow endermen to spawn")
                 .translation("mobcustomizer.config.allowEndermanSpawn")
-                .define("allowSpawn", true);
+                .define("allowSpawn", false);
 
         ENDERMAN_FOLLOW_RANGE = BUILDER
                 .comment("Detection range (vanilla: 64)")
@@ -204,7 +204,7 @@ public class Config {
         ALLOW_WITCH_SPAWN = BUILDER
                 .comment("Allow witches to spawn")
                 .translation("mobcustomizer.config.allowWitchSpawn")
-                .define("allowSpawn", true);
+                .define("allowSpawn", false);
 
         WITCH_FOLLOW_RANGE = BUILDER
                 .comment("Detection range (vanilla: 16)")
@@ -225,7 +225,7 @@ public class Config {
         ALLOW_SLIME_SPAWN = BUILDER
                 .comment("Allow slimes to spawn")
                 .translation("mobcustomizer.config.allowSlimeSpawn")
-                .define("allowSpawn", true);
+                .define("allowSpawn", false);
 
         SLIME_FOLLOW_RANGE = BUILDER
                 .comment("Detection range (vanilla: 16)")
