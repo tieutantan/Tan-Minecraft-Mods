@@ -16,7 +16,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -52,7 +51,8 @@ public final class TanGunItem extends Item {
         }
 
         player.sendOverlayMessage(Component.translatable(
-            "message.tangun.ammo", player.getAbilities().instabuild ? "Unlimited" : countAmmo(player)));
+            "message.tangun.ammo", player.getAbilities().instabuild
+                ? Component.translatable("message.tangun.unlimited") : countAmmo(player)));
 
         Vec3 start = player.getEyePosition();
         Vec3 direction = player.getViewVector(1.0F);

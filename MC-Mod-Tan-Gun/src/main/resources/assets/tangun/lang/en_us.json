@@ -2,6 +2,7 @@
   "item.tangun.tan_gun": "Tan Gun",
   "itemGroup.tangun": "Tan Gun",
   "message.tangun.ammo": "Ammo: %s",
+  "message.tangun.unlimited": "Unlimited",
   "message.tangun.out_of_ammo": "Out of ammo!",
   "tooltip.tangun.damage": "Damage: %s per hit",
   "tooltip.tangun.fire_rate": "Fire rate: %s rounds/sec",
