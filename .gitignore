@@ -14,4 +14,4 @@
 **/run/
 
 # Jars copied to mod project roots by build tasks
-MC-Mod-*/tan_tan_tools-*.jar
+*.jar
