@@ -6,6 +6,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.Weapon;
+import net.minecraft.core.component.DataComponents;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -21,7 +23,9 @@ public final class TanGun {
 
     public static final DeferredItem<TanGunItem> TAN_GUN = ITEMS.register("tan_gun",
         () -> new TanGunItem(new Item.Properties()
-            .setId(ResourceKey.create(Registries.ITEM, TanGun.id("tan_gun")))
+            .setId(ResourceKey.create(Registries.ITEM, id("tan_gun")))
+            .enchantable(15)
+            .component(DataComponents.WEAPON, new Weapon(1))
             .stacksTo(1)));
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB =

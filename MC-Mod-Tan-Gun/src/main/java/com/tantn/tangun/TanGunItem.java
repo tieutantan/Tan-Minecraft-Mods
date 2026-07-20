@@ -51,6 +51,9 @@ public final class TanGunItem extends Item {
             return false;
         }
 
+        player.sendOverlayMessage(Component.translatable(
+            "message.tangun.ammo", player.getAbilities().instabuild ? "Unlimited" : countAmmo(player)));
+
         Vec3 start = player.getEyePosition();
         Vec3 direction = player.getViewVector(1.0F);
         Vec3 maximumEnd = start.add(direction.scale(RANGE));
@@ -116,5 +119,16 @@ public final class TanGunItem extends Item {
             }
         }
         return -1;
+    }
+
+    private static int countAmmo(ServerPlayer player) {
+        int count = 0;
+        for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
+            ItemStack stack = player.getInventory().getItem(slot);
+            if (stack.is(Items.IRON_NUGGET)) {
+                count += stack.getCount();
+            }
+        }
+        return count;
     }
 }
