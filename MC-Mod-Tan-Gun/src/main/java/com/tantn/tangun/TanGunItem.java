@@ -3,7 +3,11 @@ package com.tantn.tangun;
 import java.util.List;
 import java.util.function.Consumer;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.particles.ParticleTypes;
@@ -15,6 +19,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -27,6 +33,8 @@ public final class TanGunItem extends Item {
     private static final float DAMAGE = 5.0F;
     private static final int TRACER_PARTICLES = 2;
     private static final float ROUNDS_PER_SECOND = 20.0F / FIRE_INTERVAL_TICKS;
+    private static final ResourceKey<Enchantment> FIRE_ASPECT = ResourceKey.create(
+        Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath("minecraft", "fire_aspect"));
 
     public TanGunItem(Properties properties) {
         super(properties);
@@ -65,6 +73,9 @@ public final class TanGunItem extends Item {
             entity -> entity instanceof LivingEntity && entity.isPickable() && entity != player);
         targets.sort((first, second) -> Double.compare(
             first.distanceToSqr(start), second.distanceToSqr(start)));
+        Holder<Enchantment> fireAspect = level.registryAccess()
+            .lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(FIRE_ASPECT);
+        int fireAspectLevel = EnchantmentHelper.getItemEnchantmentLevel(fireAspect, player.getMainHandItem());
 
         Vec3 tracerEnd = end;
         for (Entity target : targets) {
@@ -77,7 +88,11 @@ public final class TanGunItem extends Item {
                     livingTarget.invulnerableTime = 0;
                 }
                 Vec3 velocityBeforeHit = target.getDeltaMovement();
-                target.hurtServer(level, level.damageSources().playerAttack(player), DAMAGE);
+                boolean damaged = target.hurtServer(level, level.damageSources().playerAttack(player), DAMAGE);
+                if (damaged && fireAspectLevel > 0) {
+                    target.setRemainingFireTicks(Math.max(
+                        target.getRemainingFireTicks(), fireAspectLevel * 4 * 20));
+                }
                 target.setDeltaMovement(velocityBeforeHit);
             }
         }

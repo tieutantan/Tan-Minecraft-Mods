@@ -9,6 +9,7 @@ Tan Gun is a NeoForge mod for Minecraft 26.1.2 that adds an automatic piercing g
 - Each shot consumes one Iron Nugget from the player's inventory.
 - The action bar shows the remaining Iron Nugget ammunition after each shot.
 - The gun supports weapon enchantments, including Looting, when applied through an anvil or command.
+- Fire Aspect applies its normal fire duration to mobs hit by the gun.
 - Each living entity in the firing line takes 5 damage.
 - Shots travel up to 100 blocks and stop at solid blocks.
 - Empty ammunition prevents firing and plays a dry-fire sound.
