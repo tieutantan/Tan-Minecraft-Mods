@@ -12,6 +12,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RenderHandEvent;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 
 @EventBusSubscriber(value = Dist.CLIENT, modid = TanGun.MOD_ID)
 public final class TanGunClient {
@@ -20,6 +21,13 @@ public final class TanGunClient {
     private static float shakePhase;
 
     private TanGunClient() {
+    }
+
+    @SubscribeEvent
+    public static void onClientLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
+        sentHeld = false;
+        firing = false;
+        shakePhase = 0.0F;
     }
 
     @SubscribeEvent

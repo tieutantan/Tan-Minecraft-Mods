@@ -41,7 +41,7 @@ authors="Tran Ngoc Tan"
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 An automatic piercing gun that uses Iron Nuggets as ammunition.
-Hold right click to fire up to 100 blocks, dealing 1 damage to each entity in the line.
+Hold left click to fire up to 100 blocks, dealing 5 damage to each entity in the line.
 '''
 
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.

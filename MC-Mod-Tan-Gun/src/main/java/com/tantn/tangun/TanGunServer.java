@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 public final class TanGunServer {
@@ -17,6 +18,13 @@ public final class TanGunServer {
         if (held) {
             HELD_PLAYERS.putIfAbsent(player, 0);
         } else {
+            HELD_PLAYERS.remove(player);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
             HELD_PLAYERS.remove(player);
         }
     }
