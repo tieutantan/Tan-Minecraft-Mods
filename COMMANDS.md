@@ -1,0 +1,2 @@
+./gradlew runClient
+./gradlew build

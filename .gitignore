@@ -1,2 +1,17 @@
 .idea
 .DS_Store
+
+# IDE metadata generated per mod
+**/.eclipse/
+
+# Gradle and compiled output
+**/.gradle/
+**/.gradle/configuration-cache/
+**/bin/
+**/build/
+
+# NeoForge run directories, logs, saves, and generated runtime configuration
+**/run/
+
+# Jars copied to mod project roots by build tasks
+MC-Mod-*/tan_tan_tools-*.jar
