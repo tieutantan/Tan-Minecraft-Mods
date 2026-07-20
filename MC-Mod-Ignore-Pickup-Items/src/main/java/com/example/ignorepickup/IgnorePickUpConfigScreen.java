@@ -151,11 +151,11 @@ public class IgnorePickUpConfigScreen extends Screen {
     @Override
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float delta) {
         super.extractRenderState(guiGraphics, mouseX, mouseY, delta);
-        guiGraphics.centeredText(this.font, this.title, this.width / 2, 6, 0xFFFFFF);
+        guiGraphics.centeredText(this.font, this.title, this.width / 2, 6, 0xFFFFFFFF);
         // Page info
     int total = viewItems == null ? 0 : viewItems.size();
         int maxPage = total == 0 ? 0 : (total - 1) / pageSize;
     String info = "Items: " + total + "  Page: " + (Math.min(page, maxPage) + 1) + "/" + (maxPage + 1);
-    guiGraphics.text(this.font, info, 16, 51, 0xAAAAAA);
+    guiGraphics.text(this.font, info, 16, 51, 0xFFAAAAAA);
     }
 }

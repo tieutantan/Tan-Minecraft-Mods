@@ -174,12 +174,12 @@ public class AutoDeleteConfigScreen extends Screen {
     @Override
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float delta) {
         super.extractRenderState(guiGraphics, mouseX, mouseY, delta);
-        guiGraphics.centeredText(this.font, this.title, this.width / 2, 6, 0xFFFFFF);
-        guiGraphics.text(this.font, Component.literal("Delete Interval (min):"), 16, 49, 0xAAAAAA);
+        guiGraphics.centeredText(this.font, this.title, this.width / 2, 6, 0xFFFFFFFF);
+        guiGraphics.text(this.font, Component.literal("Delete Interval (min):"), 16, 49, 0xFFAAAAAA);
 
         int total = viewItems == null ? 0 : viewItems.size();
         int maxPage = total == 0 ? 0 : (total - 1) / pageSize;
         String info = "Items: " + total + "  Page: " + (Math.min(page, maxPage) + 1) + "/" + (maxPage + 1);
-        guiGraphics.text(this.font, info, 16, 71, 0xAAAAAA);
+        guiGraphics.text(this.font, info, 16, 71, 0xFFAAAAAA);
     }
 }

@@ -41,8 +41,8 @@ public final class TanTanToolsScreen extends Screen {
         }
     }
 
-    private static final int CONTENT_TOP = 42;
-    private static final int MENU_TOP = 42;
+    private static final int CONTENT_TOP = 54;
+    private static final int MENU_TOP = 54;
     private static final int MENU_BUTTON_HEIGHT = 24;
     private static final int MENU_GAP = 8;
 
@@ -107,6 +107,11 @@ public final class TanTanToolsScreen extends Screen {
                     .build();
             menuButtons.add(addRenderableWidget(btn));
         }
+
+        menuButtons.add(addRenderableWidget(Button.builder(Component.literal("Save & Close"), b -> onClose())
+                .pos(this.width / 2 - 50, this.height - 32)
+                .size(100, 20)
+                .build()));
     }
 
     private void openDetail(Tab tab) {
@@ -116,9 +121,16 @@ public final class TanTanToolsScreen extends Screen {
     }
 
     private void addBackButton() {
+        int btnY = this.height - 28;
+        int groupWidth = 80 + 10 + 100;
+        int startX = (this.width - groupWidth) / 2;
         addContent(Button.builder(Component.literal("Back"), b -> returnToMenu())
-                .pos(this.width / 2 - 40, this.height - 28)
+                .pos(startX, btnY)
                 .size(80, 20)
+                .build());
+        addContent(Button.builder(Component.literal("Save & Close"), b -> onClose())
+                .pos(startX + 90, btnY)
+                .size(100, 20)
                 .build());
     }
 
@@ -632,13 +644,19 @@ public final class TanTanToolsScreen extends Screen {
     @Override
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float delta) {
         super.extractRenderState(guiGraphics, mouseX, mouseY, delta);
-        guiGraphics.centeredText(this.font, this.title, this.width / 2, 6, 0xFFFFFF);
+        if (currentTab == null) {
+            guiGraphics.centeredText(this.font, this.title, this.width / 2, 12, 0xFFFFFFFF);
+            guiGraphics.centeredText(this.font, Component.literal("Author: Tran Ngoc Tan"), this.width / 2, 25, 0xFFAAAAAA);
+            guiGraphics.centeredText(this.font, Component.literal("info@tantn.com"), this.width / 2, 38, 0xFFAAAAAA);
+        } else {
+            guiGraphics.centeredText(this.font, this.title, this.width / 2, 12, 0xFFFFFFFF);
+        }
 
         if (currentTab == Tab.AUTO_DELETE && adViewItems != null) {
             int total = adViewItems.size();
             int maxPage = total == 0 ? 0 : (total - 1) / adPageSize;
             String info = "Items: " + total + "  Page: " + (Math.min(adPage, maxPage) + 1) + "/" + (maxPage + 1);
-            guiGraphics.text(this.font, info, 16, CONTENT_TOP + 66, 0xAAAAAA);
+            guiGraphics.text(this.font, info, 16, CONTENT_TOP + 66, 0xFFAAAAAA);
         }
     }
 }
