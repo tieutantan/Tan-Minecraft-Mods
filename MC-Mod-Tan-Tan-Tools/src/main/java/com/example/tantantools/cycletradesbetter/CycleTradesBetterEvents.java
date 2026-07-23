@@ -1,6 +1,7 @@
 package com.example.tantantools.cycletradesbetter;
 
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.npc.villager.VillagerProfession;
 import net.minecraft.world.item.ItemStack;
@@ -25,14 +26,25 @@ public final class CycleTradesBetterEvents {
         if (!villager.getVillagerData().profession().is(VillagerProfession.LIBRARIAN)) {
             return;
         }
-        if (villager.tickCount % 5 != 0) {
+        if (!(villager.getTradingPlayer() instanceof ServerPlayer player)) {
             return;
         }
 
-        upgradeOffers(villager.getOffers());
+        MerchantOffers offers = villager.getOffers();
+        if (upgradeOffers(offers)) {
+            player.sendMerchantOffers(
+                    player.containerMenu.containerId,
+                    offers,
+                    villager.getVillagerData().level(),
+                    villager.getVillagerXp(),
+                    villager.showProgressBar(),
+                    villager.canRestock()
+            );
+        }
     }
 
-    private static void upgradeOffers(final MerchantOffers offers) {
+    private static boolean upgradeOffers(final MerchantOffers offers) {
+        boolean changedAny = false;
         for (int index = 0; index < offers.size(); index++) {
             MerchantOffer offer = offers.get(index);
             ItemStack result = offer.getResult();
@@ -62,6 +74,8 @@ public final class CycleTradesBetterEvents {
             MerchantOffer upgradedOffer = offer.copy();
             upgradedOffer.getResult().set(DataComponents.STORED_ENCHANTMENTS, upgradedEnchantments.toImmutable());
             offers.set(index, upgradedOffer);
+            changedAny = true;
         }
+        return changedAny;
     }
 }
