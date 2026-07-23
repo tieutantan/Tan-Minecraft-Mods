@@ -30,22 +30,26 @@ public final class AutoDeleteEvents {
     private int cachedIntervalMinutes = -1;
     private boolean cachedEnabled;
     private Set<String> cachedDeleteList = Set.of();
+    private boolean configurationLoaded;
 
-    public AutoDeleteEvents() {
-        refreshConfiguration();
-    }
+    public AutoDeleteEvents() {}
 
     public void refreshConfiguration() {
         cachedIntervalMinutes = AutoDeleteConfig.DELETE_INTERVAL_MINUTES.get();
         cachedEnabled = AutoDeleteConfig.ENABLED.get();
         cachedDeleteList = new HashSet<>(AutoDeleteConfig.DELETE_LIST.get());
         nextScanByPlayer.clear();
+        configurationLoaded = true;
     }
 
     @SubscribeEvent
     public void onPlayerTick(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
             return;
+        }
+
+        if (!configurationLoaded) {
+            refreshConfiguration();
         }
 
         if (!cachedEnabled || cachedDeleteList.isEmpty()) {
