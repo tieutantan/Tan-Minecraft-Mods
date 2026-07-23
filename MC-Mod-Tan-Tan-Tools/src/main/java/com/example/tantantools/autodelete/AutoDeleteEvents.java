@@ -9,31 +9,38 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Periodically scans the player's inventory for items in the delete list
- * and removes them. Runs on the configured interval (default: 5 minutes).
- *
- * Optimized: caches config values, uses local registry ref,
- * batches broadcastChanges into a single call.
+ * and removes them. Runs on the configured interval (default: 1 minute).
  */
 public final class AutoDeleteEvents {
 
     // Local registry reference for fast lookup
     private static final Registry<Item> ITEM_REGISTRY = BuiltInRegistries.ITEM;
-
-    // Cache config values to avoid repeated lookups per tick
-    private int cachedIntervalTicks = -1;
-    private boolean cachedEnabled = true;
+    private final Map<UUID, Long> nextScanByPlayer = new HashMap<>();
+    private int cachedIntervalMinutes = -1;
+    private boolean cachedEnabled;
     private Set<String> cachedDeleteList = Set.of();
 
-    public AutoDeleteEvents() {}
+    public AutoDeleteEvents() {
+        refreshConfiguration();
+    }
+
+    public void refreshConfiguration() {
+        cachedIntervalMinutes = AutoDeleteConfig.DELETE_INTERVAL_MINUTES.get();
+        cachedEnabled = AutoDeleteConfig.ENABLED.get();
+        cachedDeleteList = new HashSet<>(AutoDeleteConfig.DELETE_LIST.get());
+        nextScanByPlayer.clear();
+    }
 
     @SubscribeEvent
     public void onPlayerTick(PlayerTickEvent.Post event) {
@@ -41,20 +48,15 @@ public final class AutoDeleteEvents {
             return;
         }
 
-        // Skip tick 0: tickCount=0 % anything == 0, which would delete items immediately on join
-        if (player.tickCount == 0) return;
-
-        // Refresh cache lazily — only when tickCount aligns with interval
-        if (cachedIntervalTicks < 0 || player.tickCount % cachedIntervalTicks == 0) {
-            int minutes = AutoDeleteConfig.DELETE_INTERVAL_MINUTES.get();
-            cachedIntervalTicks = minutes > 0 ? minutes * 20 * 60 : 6000;
-            cachedEnabled = AutoDeleteConfig.ENABLED.get();
-            cachedDeleteList = new HashSet<>(AutoDeleteConfig.DELETE_LIST.get());
-        }
-
-        if (player.tickCount % cachedIntervalTicks != 0 || !cachedEnabled || cachedDeleteList.isEmpty()) {
+        if (!cachedEnabled || cachedDeleteList.isEmpty()) {
             return;
         }
+
+        long currentGameTime = player.level().getGameTime();
+        long nextScan = nextScanByPlayer.computeIfAbsent(
+                player.getUUID(), ignored -> currentGameTime + Math.max(1, cachedIntervalMinutes) * 20L * 60L);
+        if (currentGameTime < nextScan) return;
+        nextScanByPlayer.put(player.getUUID(), currentGameTime + Math.max(1, cachedIntervalMinutes) * 20L * 60L);
 
         // Scan inventory
         Map<String, Integer> deletedItems = new HashMap<>();
@@ -71,7 +73,8 @@ public final class AutoDeleteEvents {
 
             String key = id.toString();
             if (cachedDeleteList.contains(key)) {
-                deletedItems.merge(key, stack.getCount(), Integer::sum);
+                int previousCount = deletedItems.getOrDefault(key, 0);
+                deletedItems.put(key, previousCount + stack.getCount());
                 inventory.setItem(slot, ItemStack.EMPTY);
             }
         }
@@ -95,5 +98,10 @@ public final class AutoDeleteEvents {
         if (player.containerMenu != null) {
             player.containerMenu.broadcastChanges();
         }
+    }
+
+    @SubscribeEvent
+    public void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
+        nextScanByPlayer.remove(event.getEntity().getUUID());
     }
 }

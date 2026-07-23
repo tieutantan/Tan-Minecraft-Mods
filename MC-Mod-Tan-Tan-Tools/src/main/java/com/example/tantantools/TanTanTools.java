@@ -51,7 +51,8 @@ public final class TanTanTools {
         modEventBus.addListener(AutoTransferPacket::register);
 
         // Feature event handlers (NeoForge global bus)
-        NeoForge.EVENT_BUS.register(new AutoDeleteEvents());
+        AutoDeleteEvents autoDeleteEvents = new AutoDeleteEvents();
+        NeoForge.EVENT_BUS.register(autoDeleteEvents);
         NeoForge.EVENT_BUS.register(new AutoEatEvents());
         NeoForge.EVENT_BUS.register(new ExpFromNatureEvents());
         NeoForge.EVENT_BUS.register(new CombineEnchantedItemsEvents());
@@ -63,6 +64,9 @@ public final class TanTanTools {
 
         // Auto-refresh mob spawn cache when the mob customizer config changes (e.g. after Config GUI "Done")
         modEventBus.addListener(ModConfigEvent.Reloading.class, event -> {
+            if (event.getConfig().getSpec() == AutoDeleteConfig.SPEC) {
+                autoDeleteEvents.refreshConfiguration();
+            }
             if (event.getConfig().getSpec() == MobCustomizerConfig.SPEC) {
                 SpawnEventHandler.refreshCache();
                 LOGGER.info("Mob Customizer config reloaded — spawn cache refreshed");

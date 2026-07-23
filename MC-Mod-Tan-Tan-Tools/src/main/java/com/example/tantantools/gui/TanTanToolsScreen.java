@@ -300,7 +300,7 @@ public final class TanTanToolsScreen extends Screen {
         AutoDeleteConfig.ENABLED.set(adEnabledBox.selected());
         AutoDeleteConfig.DELETE_LIST.set(new ArrayList<>(adDeleteList));
         AutoDeleteConfig.DELETE_INTERVAL_MINUTES.set(adIntervalMinutes);
-        AutoDeleteConfig.DELETE_LIST.save();
+        AutoDeleteConfig.SPEC.save();
     }
 
     // ===================================================================

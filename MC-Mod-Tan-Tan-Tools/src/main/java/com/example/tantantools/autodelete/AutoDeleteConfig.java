@@ -12,9 +12,9 @@ public final class AutoDeleteConfig {
             .define("enabled", true);
 
     public static final ModConfigSpec.IntValue DELETE_INTERVAL_MINUTES = BUILDER
-            .comment("How often (in minutes) the inventory is scanned for items to delete (1-60, default 5)")
+            .comment("How often (in minutes) the inventory is scanned for items to delete (1-60, default 1)")
             .translation("tantantools.config.autodelete.deleteIntervalMinutes")
-            .defineInRange("deleteIntervalMinutes", 5, 1, 60);
+            .defineInRange("deleteIntervalMinutes", 1, 1, 60);
 
     public static final ModConfigSpec.ConfigValue<List<? extends String>> DELETE_LIST = BUILDER
             .comment("List of item IDs to automatically delete from inventory. Format: 'minecraft:sand'")

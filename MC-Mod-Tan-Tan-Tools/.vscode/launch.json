@@ -9,7 +9,7 @@
         "group": "Mod Development - tan_tan_tools",
         "order": 0
       },
-      "projectName": "tan_tan_tools-MC-Mod-Tan-Tan-Tools",
+      "projectName": "tan_tan_tools",
       "mainClass": "net.neoforged.devlaunch.Main",
       "args": [
         "@/Users/tanpc/Desktop/Tan-Minecraft-Mods/MC-Mod-Tan-Tan-Tools/build/moddev/clientRunProgramArgs.txt"
@@ -31,7 +31,7 @@
         "group": "Mod Development - tan_tan_tools",
         "order": 1
       },
-      "projectName": "tan_tan_tools-MC-Mod-Tan-Tan-Tools",
+      "projectName": "tan_tan_tools",
       "mainClass": "net.neoforged.devlaunch.Main",
       "args": [
         "@/Users/tanpc/Desktop/Tan-Minecraft-Mods/MC-Mod-Tan-Tan-Tools/build/moddev/dataRunProgramArgs.txt"
@@ -53,7 +53,7 @@
         "group": "Mod Development - tan_tan_tools",
         "order": 2
       },
-      "projectName": "tan_tan_tools-MC-Mod-Tan-Tan-Tools",
+      "projectName": "tan_tan_tools",
       "mainClass": "net.neoforged.devlaunch.Main",
       "args": [
         "@/Users/tanpc/Desktop/Tan-Minecraft-Mods/MC-Mod-Tan-Tan-Tools/build/moddev/gameTestServerRunProgramArgs.txt"
@@ -75,7 +75,7 @@
         "group": "Mod Development - tan_tan_tools",
         "order": 3
       },
-      "projectName": "tan_tan_tools-MC-Mod-Tan-Tan-Tools",
+      "projectName": "tan_tan_tools",
       "mainClass": "net.neoforged.devlaunch.Main",
       "args": [
         "@/Users/tanpc/Desktop/Tan-Minecraft-Mods/MC-Mod-Tan-Tan-Tools/build/moddev/serverRunProgramArgs.txt"
