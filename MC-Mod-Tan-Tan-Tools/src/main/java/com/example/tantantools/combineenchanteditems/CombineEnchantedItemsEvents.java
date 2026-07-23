@@ -15,6 +15,6 @@ public final class CombineEnchantedItemsEvents {
         int vanillaCost = event.getXpCost();
         if (vanillaCost <= 0) return;
 
-        event.setXpCost(vanillaCost * percent / 100);
+        event.setXpCost(Math.max(1, vanillaCost * percent / 100));
     }
 }
