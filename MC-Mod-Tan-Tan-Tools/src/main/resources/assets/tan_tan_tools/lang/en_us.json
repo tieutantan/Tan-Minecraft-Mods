@@ -22,9 +22,6 @@
 
   "tantantools.config.mobcustomizer.allowZombieSpawn": "Allow Zombie Spawn",
   "tantantools.config.mobcustomizer.zombieSpawnRatePercent": "Zombie Spawn Rate (%)",
-  "tantantools.config.mobcustomizer.zombieWeightMultiplier": "Zombie Weight Multiplier",
-  "tantantools.config.mobcustomizer.zombieMinGroupSize": "Zombie Min Group Size",
-  "tantantools.config.mobcustomizer.zombieMaxGroupSize": "Zombie Max Group Size",
   "tantantools.config.mobcustomizer.zombieFollowRange": "Zombie Follow Range",
   "tantantools.config.mobcustomizer.zombieMovementSpeed": "Zombie Movement Speed",
   "tantantools.config.mobcustomizer.zombieAttackDamage": "Zombie Attack Damage",

@@ -8,9 +8,6 @@ public final class MobCustomizerConfig {
     // ===== ZOMBIE SETTINGS =====
     public static final ModConfigSpec.BooleanValue ALLOW_ZOMBIE_SPAWN;
     public static final ModConfigSpec.IntValue ZOMBIE_SPAWN_RATE_PERCENT;
-    public static final ModConfigSpec.IntValue ZOMBIE_WEIGHT_MULTIPLIER;
-    public static final ModConfigSpec.IntValue ZOMBIE_MIN_GROUP_SIZE;
-    public static final ModConfigSpec.IntValue ZOMBIE_MAX_GROUP_SIZE;
     public static final ModConfigSpec.DoubleValue ZOMBIE_FOLLOW_RANGE;
     public static final ModConfigSpec.DoubleValue ZOMBIE_MOVEMENT_SPEED;
     public static final ModConfigSpec.DoubleValue ZOMBIE_ATTACK_DAMAGE;
@@ -69,18 +66,6 @@ public final class MobCustomizerConfig {
                 .comment("Spawn amount, as a percentage of vanilla (1-300, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
                 .translation("tantantools.config.mobcustomizer.zombieSpawnRatePercent")
                 .defineInRange("spawnRatePercent", 100, 1, 300);
-        ZOMBIE_WEIGHT_MULTIPLIER = BUILDER
-                .comment("Spawn weight multiplier (vanilla: ~1x, higher = more spawns)")
-                .translation("tantantools.config.mobcustomizer.zombieWeightMultiplier")
-                .defineInRange("weightMultiplier", 1, 1, 50);
-        ZOMBIE_MIN_GROUP_SIZE = BUILDER
-                .comment("Minimum zombies per group (vanilla: 4)")
-                .translation("tantantools.config.mobcustomizer.zombieMinGroupSize")
-                .defineInRange("minGroupSize", 4, 1, 20);
-        ZOMBIE_MAX_GROUP_SIZE = BUILDER
-                .comment("Maximum zombies per group (vanilla: 4)")
-                .translation("tantantools.config.mobcustomizer.zombieMaxGroupSize")
-                .defineInRange("maxGroupSize", 4, 1, 50);
         ZOMBIE_FOLLOW_RANGE = BUILDER
                 .comment("Detection range in blocks (vanilla: 35)")
                 .translation("tantantools.config.mobcustomizer.zombieFollowRange")
