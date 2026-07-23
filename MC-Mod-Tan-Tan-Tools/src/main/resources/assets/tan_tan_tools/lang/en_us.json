@@ -18,6 +18,8 @@
   "tantantools.config.expfromnature.xpPerStoneBlock": "XP Per Stone Block",
   "tantantools.config.expfromnature.xpPerTreeBlock": "XP Per Tree Block",
 
+  "tantantools.config.cycletradesbetter.enabled": "Enable Cycle Trades Better",
+
   "tantantools.config.mobcustomizer.allowZombieSpawn": "Allow Zombie Spawn",
   "tantantools.config.mobcustomizer.zombieSpawnRatePercent": "Zombie Spawn Rate (%)",
   "tantantools.config.mobcustomizer.zombieWeightMultiplier": "Zombie Weight Multiplier",

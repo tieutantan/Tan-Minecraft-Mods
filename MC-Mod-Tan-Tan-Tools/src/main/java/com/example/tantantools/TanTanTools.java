@@ -10,6 +10,8 @@ import com.example.tantantools.expfromnature.ExpFromNatureConfig;
 import com.example.tantantools.expfromnature.ExpFromNatureEvents;
 import com.example.tantantools.combineenchanteditems.CombineEnchantedItemsConfig;
 import com.example.tantantools.combineenchanteditems.CombineEnchantedItemsEvents;
+import com.example.tantantools.cycletradesbetter.CycleTradesBetterConfig;
+import com.example.tantantools.cycletradesbetter.CycleTradesBetterEvents;
 import com.example.tantantools.mobcustomizer.MobCustomizerConfig;
 import com.example.tantantools.mobcustomizer.MobSpawnCustomizer;
 import com.example.tantantools.mobcustomizer.SpawnEventHandler;
@@ -46,6 +48,7 @@ public final class TanTanTools {
         modContainer.registerConfig(ModConfig.Type.COMMON, ExpFromNatureConfig.SPEC, MODID + "-expfromnature.toml");
         modContainer.registerConfig(ModConfig.Type.COMMON, MobCustomizerConfig.SPEC, MODID + "-mobcustomizer.toml");
         modContainer.registerConfig(ModConfig.Type.COMMON, CombineEnchantedItemsConfig.SPEC, MODID + "-combineenchanteditems.toml");
+        modContainer.registerConfig(ModConfig.Type.COMMON, CycleTradesBetterConfig.SPEC, MODID + "-cycletradesbetter.toml");
 
         // Network packet registration (mod event bus)
         modEventBus.addListener(AutoTransferPacket::register);
@@ -56,6 +59,7 @@ public final class TanTanTools {
         NeoForge.EVENT_BUS.register(new AutoEatEvents());
         NeoForge.EVENT_BUS.register(new ExpFromNatureEvents());
         NeoForge.EVENT_BUS.register(new CombineEnchantedItemsEvents());
+        NeoForge.EVENT_BUS.register(new CycleTradesBetterEvents());
         NeoForge.EVENT_BUS.register(new MobSpawnCustomizer());
         NeoForge.EVENT_BUS.register(new SpawnEventHandler());
         // MobAttributeHandler is auto-registered via @EventBusSubscriber — auto-routed to mod bus because EntityAttributeModificationEvent implements IModBusEvent

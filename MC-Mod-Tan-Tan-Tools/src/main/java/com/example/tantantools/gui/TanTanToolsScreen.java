@@ -4,6 +4,7 @@ import com.example.tantantools.autodelete.AutoDeleteConfig;
 import com.example.tantantools.autoeat.AutoEatConfig;
 import com.example.tantantools.autotransfer.AutoTransferConfig;
 import com.example.tantantools.combineenchanteditems.CombineEnchantedItemsConfig;
+import com.example.tantantools.cycletradesbetter.CycleTradesBetterConfig;
 import com.example.tantantools.expfromnature.ExpFromNatureConfig;
 import com.example.tantantools.mobcustomizer.MobConfigs;
 import com.example.tantantools.mobcustomizer.MobCustomizerConfig;
@@ -32,6 +33,7 @@ public final class TanTanToolsScreen extends Screen {
         AUTO_TRANSFER("Auto Transfer"),
         EXP_FROM_NATURE("Exp From Nature"),
         COMBINE_ENCHANTED_ITEMS_EXP("Combine Enchanted Items Exp"),
+        CYCLE_TRADES("Cycle Trades Better"),
         MOB_CUSTOMIZER("Mob Customizer");
 
         final String label;
@@ -161,6 +163,7 @@ public final class TanTanToolsScreen extends Screen {
             case AUTO_TRANSFER -> buildAutoTransferTab();
             case EXP_FROM_NATURE -> buildExpFromNatureTab();
             case COMBINE_ENCHANTED_ITEMS_EXP -> buildCombineEnchantedItemsExpTab();
+            case CYCLE_TRADES -> buildCycleTradesTab();
             case MOB_CUSTOMIZER -> buildMobCustomizerTab();
         }
     }
@@ -546,6 +549,33 @@ public final class TanTanToolsScreen extends Screen {
     }
 
     // ===================================================================
+    // Cycle Trades Better tab
+    // ===================================================================
+
+    private Checkbox ctEnabledBox;
+
+    private void buildCycleTradesTab() {
+        int left = 16;
+        int y = CONTENT_TOP;
+
+        ctEnabledBox = addContent(Checkbox.builder(Component.literal("Cycle Librarian trades better"), this.font)
+                .pos(left, y)
+                .selected(CycleTradesBetterConfig.ENABLED.get())
+                .build());
+
+        y += 32;
+        addContent(new net.minecraft.client.gui.components.MultiLineTextWidget(left, y,
+            Component.literal("When enabled, Librarian enchanted books use the maximum level supported by each enchantment."),
+                this.font).setMaxWidth(this.width - left * 2));
+    }
+
+    private void saveCycleTradesTab() {
+        if (ctEnabledBox == null) return;
+        CycleTradesBetterConfig.ENABLED.set(ctEnabledBox.selected());
+        CycleTradesBetterConfig.ENABLED.save();
+    }
+
+    // ===================================================================
     // Mob Customizer tab
     // ===================================================================
 
@@ -631,6 +661,7 @@ public final class TanTanToolsScreen extends Screen {
             case AUTO_TRANSFER -> saveAutoTransferTab();
             case EXP_FROM_NATURE -> saveExpFromNatureTab();
             case COMBINE_ENCHANTED_ITEMS_EXP -> saveCombineEnchantedItemsExpTab();
+            case CYCLE_TRADES -> saveCycleTradesTab();
             case MOB_CUSTOMIZER -> saveMobCustomizerTab();
         }
     }
