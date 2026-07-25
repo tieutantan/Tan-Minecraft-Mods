@@ -586,9 +586,7 @@ public final class TanTanToolsScreen extends Screen {
     private final int[] mcSpeedPercent = new int[MobConfigs.count()];
     private final Button[] mcSpeedBtns = new Button[MobConfigs.count()];
 
-    private static final int MOB_PERCENT_MIN = 1;
-    private static final int MOB_PERCENT_MAX = 1000;
-    private static final int MOB_PERCENT_STEP = 100;
+    private static final int[] MOB_PERCENT_OPTIONS = {1, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000};
 
     private static String mobLabel(int index) {
         return MobConfigs.get(index).entityClass().getSimpleName();
@@ -598,17 +596,27 @@ public final class TanTanToolsScreen extends Screen {
         return percent + "%";
     }
 
+    private static int percentOptionIndex(int percent) {
+        for (int i = MOB_PERCENT_OPTIONS.length - 1; i >= 0; i--) {
+            if (percent >= MOB_PERCENT_OPTIONS[i]) return i;
+        }
+        return 0;
+    }
+
     private Button addMobPercentControl(String label, int x, int y, int[] values, Button[] buttons, int index) {
         addContent(Button.builder(Component.literal("-"), b -> {
-            values[index] = Math.max(MOB_PERCENT_MIN, values[index] - MOB_PERCENT_STEP);
+            int optionIndex = percentOptionIndex(values[index]);
+            values[index] = MOB_PERCENT_OPTIONS[Math.max(0, optionIndex - 1)];
             buttons[index].setMessage(Component.literal(label + ": " + rateLabel(values[index])));
         }).pos(x, y).size(20, 20).build());
 
+        values[index] = MOB_PERCENT_OPTIONS[percentOptionIndex(values[index])];
         buttons[index] = addContent(Button.builder(Component.literal(label + ": " + rateLabel(values[index])), b -> {})
             .pos(x + 24, y).size(72, 20).build());
 
         addContent(Button.builder(Component.literal("+"), b -> {
-            values[index] = Math.min(MOB_PERCENT_MAX, values[index] + MOB_PERCENT_STEP);
+            int optionIndex = percentOptionIndex(values[index]);
+            values[index] = MOB_PERCENT_OPTIONS[Math.min(MOB_PERCENT_OPTIONS.length - 1, optionIndex + 1)];
             buttons[index].setMessage(Component.literal(label + ": " + rateLabel(values[index])));
         }).pos(x + 100, y).size(20, 20).build());
 
