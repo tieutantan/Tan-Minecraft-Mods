@@ -579,10 +579,16 @@ public final class TanTanToolsScreen extends Screen {
     // Mob Customizer tab
     // ===================================================================
 
-    /** Per-mob GUI row state: checkbox + live rate value + rate label button, indexed like MobConfigs.ALL. */
+    /** Per-mob GUI row state, indexed like MobConfigs.ALL. */
     private final Checkbox[] mcAllowBoxes = new Checkbox[MobConfigs.count()];
     private final int[] mcRatePercent = new int[MobConfigs.count()];
     private final Button[] mcRateBtns = new Button[MobConfigs.count()];
+    private final int[] mcSpeedPercent = new int[MobConfigs.count()];
+    private final Button[] mcSpeedBtns = new Button[MobConfigs.count()];
+
+    private static final int MOB_PERCENT_MIN = 1;
+    private static final int MOB_PERCENT_MAX = 1000;
+    private static final int MOB_PERCENT_STEP = 100;
 
     private static String mobLabel(int index) {
         return MobConfigs.get(index).entityClass().getSimpleName();
@@ -592,11 +598,27 @@ public final class TanTanToolsScreen extends Screen {
         return percent + "%";
     }
 
+    private Button addMobPercentControl(String label, int x, int y, int[] values, Button[] buttons, int index) {
+        addContent(Button.builder(Component.literal("-"), b -> {
+            values[index] = Math.max(MOB_PERCENT_MIN, values[index] - MOB_PERCENT_STEP);
+            buttons[index].setMessage(Component.literal(label + ": " + rateLabel(values[index])));
+        }).pos(x, y).size(20, 20).build());
+
+        buttons[index] = addContent(Button.builder(Component.literal(label + ": " + rateLabel(values[index])), b -> {})
+            .pos(x + 24, y).size(72, 20).build());
+
+        addContent(Button.builder(Component.literal("+"), b -> {
+            values[index] = Math.min(MOB_PERCENT_MAX, values[index] + MOB_PERCENT_STEP);
+            buttons[index].setMessage(Component.literal(label + ": " + rateLabel(values[index])));
+        }).pos(x + 100, y).size(20, 20).build());
+
+        return buttons[index];
+    }
+
     private void buildMobCustomizerTab() {
         int left = 16;
-        int centerX = this.width / 2;
         int y = CONTENT_TOP;
-        int rowH = 26;
+        int rowH = 44;
 
         for (int i = 0; i < MobConfigs.count(); i++) {
             MobConfigs.MobDef mob = MobConfigs.get(i);
@@ -606,35 +628,19 @@ public final class TanTanToolsScreen extends Screen {
                     .pos(left, y).selected(mob.allowSpawn().get()).build());
 
             mcRatePercent[idx] = mob.spawnRatePercent().get();
+            mcSpeedPercent[idx] = mob.spawnSpeedPercent().get();
 
-            addContent(Button.builder(Component.literal("-"), b -> {
-                if (mcRatePercent[idx] > 1) {
-                    mcRatePercent[idx] -= 5;
-                    if (mcRatePercent[idx] < 1) mcRatePercent[idx] = 1;
-                    mcRateBtns[idx].setMessage(Component.literal(rateLabel(mcRatePercent[idx])));
-                }
-            }).pos(centerX + 60, y).size(20, 20).build());
-
-            mcRateBtns[idx] = addContent(Button.builder(Component.literal(rateLabel(mcRatePercent[idx])), b -> {})
-                    .pos(centerX + 84, y).size(50, 20).build());
-
-            addContent(Button.builder(Component.literal("+"), b -> {
-                if (mcRatePercent[idx] < 300) {
-                    mcRatePercent[idx] += 5;
-                    if (mcRatePercent[idx] > 300) mcRatePercent[idx] = 300;
-                    mcRateBtns[idx].setMessage(Component.literal(rateLabel(mcRatePercent[idx])));
-                }
-            }).pos(centerX + 138, y).size(20, 20).build());
+            addMobPercentControl("Rate", left, y + 22, mcRatePercent, mcRateBtns, idx);
+            addMobPercentControl("Speed", left + 124, y + 22, mcSpeedPercent, mcSpeedBtns, idx);
 
             y += rowH;
         }
 
         y += 8;
         addContent(new net.minecraft.client.gui.components.MultiLineTextWidget(left, y,
-                Component.literal("Spawn rate %: 100% = vanilla amount. Below 100% = chance to skip a spawn " +
-                        "(fewer mobs). Above 100% = extra copies spawn alongside the original (more mobs, up to 300%). " +
-                        "Other advanced settings (speed, damage, follow range) can be adjusted in the config file: " +
-                        "tan_tan_tools-mobcustomizer.toml"),
+                Component.literal("Spawn Rate: 100% = vanilla amount. Spawn Speed: 100% = normal spawn throughput. " +
+                    "Both controls change by 100% per click and support 1-1000%. The runtime limits each natural " +
+                    "spawn candidate to three mobs. Other settings can be adjusted in tan_tan_tools-mobcustomizer.toml"),
                 this.font).setMaxWidth(this.width - left * 2));
     }
 
@@ -644,6 +650,7 @@ public final class TanTanToolsScreen extends Screen {
             MobConfigs.MobDef mob = MobConfigs.get(i);
             mob.allowSpawn().set(mcAllowBoxes[i].selected());
             mob.spawnRatePercent().set(mcRatePercent[i]);
+            mob.spawnSpeedPercent().set(mcSpeedPercent[i]);
         }
         MobCustomizerConfig.ALLOW_ZOMBIE_SPAWN.save();
         SpawnEventHandler.refreshCache();

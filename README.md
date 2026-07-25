@@ -16,7 +16,7 @@ A collection of client-side/singleplayer Minecraft mods that automate gameplay a
 - Exp From Nature — gain configurable EXP from breaking stone, ores, wood, and leaves
 - Combine Enchanted Items — combine compatible enchanted items according to the feature settings
 - Cycle Trades Better — cycle villager trades more conveniently
-- Mob Customizer — enable or disable hostile mob spawning and adjust spawn rates, groups, and attributes
+- Mob Customizer — enable or disable hostile mob spawning and adjust per-mob spawn rate and spawn speed percentages, plus attributes
 - Press **O** to open the shared Tan Tan Tools settings screen
 - The mod uses separate configuration files for each feature and supports `/tantantools mobcustom reload`
 

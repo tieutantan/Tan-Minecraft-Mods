@@ -8,6 +8,7 @@ public final class MobCustomizerConfig {
     // ===== ZOMBIE SETTINGS =====
     public static final ModConfigSpec.BooleanValue ALLOW_ZOMBIE_SPAWN;
     public static final ModConfigSpec.IntValue ZOMBIE_SPAWN_RATE_PERCENT;
+        public static final ModConfigSpec.IntValue ZOMBIE_SPAWN_SPEED_PERCENT;
     public static final ModConfigSpec.DoubleValue ZOMBIE_FOLLOW_RANGE;
     public static final ModConfigSpec.DoubleValue ZOMBIE_MOVEMENT_SPEED;
     public static final ModConfigSpec.DoubleValue ZOMBIE_ATTACK_DAMAGE;
@@ -15,6 +16,7 @@ public final class MobCustomizerConfig {
     // ===== CREEPER SETTINGS =====
     public static final ModConfigSpec.BooleanValue ALLOW_CREEPER_SPAWN;
     public static final ModConfigSpec.IntValue CREEPER_SPAWN_RATE_PERCENT;
+        public static final ModConfigSpec.IntValue CREEPER_SPAWN_SPEED_PERCENT;
     public static final ModConfigSpec.DoubleValue CREEPER_FOLLOW_RANGE;
     public static final ModConfigSpec.DoubleValue CREEPER_MOVEMENT_SPEED;
     public static final ModConfigSpec.IntValue CREEPER_EXPLOSION_RADIUS;
@@ -22,6 +24,7 @@ public final class MobCustomizerConfig {
     // ===== SKELETON SETTINGS =====
     public static final ModConfigSpec.BooleanValue ALLOW_SKELETON_SPAWN;
     public static final ModConfigSpec.IntValue SKELETON_SPAWN_RATE_PERCENT;
+        public static final ModConfigSpec.IntValue SKELETON_SPAWN_SPEED_PERCENT;
     public static final ModConfigSpec.DoubleValue SKELETON_FOLLOW_RANGE;
     public static final ModConfigSpec.DoubleValue SKELETON_MOVEMENT_SPEED;
     public static final ModConfigSpec.DoubleValue SKELETON_ATTACK_DAMAGE;
@@ -29,6 +32,7 @@ public final class MobCustomizerConfig {
     // ===== SPIDER SETTINGS =====
     public static final ModConfigSpec.BooleanValue ALLOW_SPIDER_SPAWN;
     public static final ModConfigSpec.IntValue SPIDER_SPAWN_RATE_PERCENT;
+        public static final ModConfigSpec.IntValue SPIDER_SPAWN_SPEED_PERCENT;
     public static final ModConfigSpec.DoubleValue SPIDER_FOLLOW_RANGE;
     public static final ModConfigSpec.DoubleValue SPIDER_MOVEMENT_SPEED;
     public static final ModConfigSpec.DoubleValue SPIDER_ATTACK_DAMAGE;
@@ -36,6 +40,7 @@ public final class MobCustomizerConfig {
     // ===== ENDERMAN SETTINGS =====
     public static final ModConfigSpec.BooleanValue ALLOW_ENDERMAN_SPAWN;
     public static final ModConfigSpec.IntValue ENDERMAN_SPAWN_RATE_PERCENT;
+        public static final ModConfigSpec.IntValue ENDERMAN_SPAWN_SPEED_PERCENT;
     public static final ModConfigSpec.DoubleValue ENDERMAN_FOLLOW_RANGE;
     public static final ModConfigSpec.DoubleValue ENDERMAN_MOVEMENT_SPEED;
     public static final ModConfigSpec.DoubleValue ENDERMAN_ATTACK_DAMAGE;
@@ -43,12 +48,14 @@ public final class MobCustomizerConfig {
     // ===== WITCH SETTINGS =====
     public static final ModConfigSpec.BooleanValue ALLOW_WITCH_SPAWN;
     public static final ModConfigSpec.IntValue WITCH_SPAWN_RATE_PERCENT;
+        public static final ModConfigSpec.IntValue WITCH_SPAWN_SPEED_PERCENT;
     public static final ModConfigSpec.DoubleValue WITCH_FOLLOW_RANGE;
     public static final ModConfigSpec.DoubleValue WITCH_MOVEMENT_SPEED;
 
     // ===== SLIME SETTINGS =====
     public static final ModConfigSpec.BooleanValue ALLOW_SLIME_SPAWN;
     public static final ModConfigSpec.IntValue SLIME_SPAWN_RATE_PERCENT;
+        public static final ModConfigSpec.IntValue SLIME_SPAWN_SPEED_PERCENT;
     public static final ModConfigSpec.DoubleValue SLIME_FOLLOW_RANGE;
     public static final ModConfigSpec.DoubleValue SLIME_MOVEMENT_SPEED;
     public static final ModConfigSpec.DoubleValue SLIME_ATTACK_DAMAGE;
@@ -63,9 +70,10 @@ public final class MobCustomizerConfig {
                 .translation("tantantools.config.mobcustomizer.allowZombieSpawn")
                 .define("allowSpawn", true);
         ZOMBIE_SPAWN_RATE_PERCENT = BUILDER
-                .comment("Spawn amount, as a percentage of vanilla (1-300, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
+                .comment("Spawn amount, as a percentage of vanilla (1-1000, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
                 .translation("tantantools.config.mobcustomizer.zombieSpawnRatePercent")
-                .defineInRange("spawnRatePercent", 100, 1, 300);
+                .defineInRange("spawnRatePercent", 100, 1, 1000);
+        ZOMBIE_SPAWN_SPEED_PERCENT = spawnSpeed("zombie");
         ZOMBIE_FOLLOW_RANGE = BUILDER
                 .comment("Detection range in blocks (vanilla: 35)")
                 .translation("tantantools.config.mobcustomizer.zombieFollowRange")
@@ -87,9 +95,10 @@ public final class MobCustomizerConfig {
                 .translation("tantantools.config.mobcustomizer.allowCreeperSpawn")
                 .define("allowSpawn", false);
         CREEPER_SPAWN_RATE_PERCENT = BUILDER
-                .comment("Spawn amount, as a percentage of vanilla (1-300, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
+                .comment("Spawn amount, as a percentage of vanilla (1-1000, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
                 .translation("tantantools.config.mobcustomizer.creeperSpawnRatePercent")
-                .defineInRange("spawnRatePercent", 100, 1, 300);
+                .defineInRange("spawnRatePercent", 100, 1, 1000);
+        CREEPER_SPAWN_SPEED_PERCENT = spawnSpeed("creeper");
         CREEPER_FOLLOW_RANGE = BUILDER
                 .comment("Detection range (vanilla: 16)")
                 .translation("tantantools.config.mobcustomizer.creeperFollowRange")
@@ -111,9 +120,10 @@ public final class MobCustomizerConfig {
                 .translation("tantantools.config.mobcustomizer.allowSkeletonSpawn")
                 .define("allowSpawn", false);
         SKELETON_SPAWN_RATE_PERCENT = BUILDER
-                .comment("Spawn amount, as a percentage of vanilla (1-300, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
+                .comment("Spawn amount, as a percentage of vanilla (1-1000, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
                 .translation("tantantools.config.mobcustomizer.skeletonSpawnRatePercent")
-                .defineInRange("spawnRatePercent", 100, 1, 300);
+                .defineInRange("spawnRatePercent", 100, 1, 1000);
+        SKELETON_SPAWN_SPEED_PERCENT = spawnSpeed("skeleton");
         SKELETON_FOLLOW_RANGE = BUILDER
                 .comment("Detection range (vanilla: 15)")
                 .translation("tantantools.config.mobcustomizer.skeletonFollowRange")
@@ -135,9 +145,10 @@ public final class MobCustomizerConfig {
                 .translation("tantantools.config.mobcustomizer.allowSpiderSpawn")
                 .define("allowSpawn", false);
         SPIDER_SPAWN_RATE_PERCENT = BUILDER
-                .comment("Spawn amount, as a percentage of vanilla (1-300, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
+                .comment("Spawn amount, as a percentage of vanilla (1-1000, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
                 .translation("tantantools.config.mobcustomizer.spiderSpawnRatePercent")
-                .defineInRange("spawnRatePercent", 100, 1, 300);
+                .defineInRange("spawnRatePercent", 100, 1, 1000);
+        SPIDER_SPAWN_SPEED_PERCENT = spawnSpeed("spider");
         SPIDER_FOLLOW_RANGE = BUILDER
                 .comment("Detection range (vanilla: 16)")
                 .translation("tantantools.config.mobcustomizer.spiderFollowRange")
@@ -159,9 +170,10 @@ public final class MobCustomizerConfig {
                 .translation("tantantools.config.mobcustomizer.allowEndermanSpawn")
                 .define("allowSpawn", false);
         ENDERMAN_SPAWN_RATE_PERCENT = BUILDER
-                .comment("Spawn amount, as a percentage of vanilla (1-300, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
+                .comment("Spawn amount, as a percentage of vanilla (1-1000, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
                 .translation("tantantools.config.mobcustomizer.endermanSpawnRatePercent")
-                .defineInRange("spawnRatePercent", 100, 1, 300);
+                .defineInRange("spawnRatePercent", 100, 1, 1000);
+        ENDERMAN_SPAWN_SPEED_PERCENT = spawnSpeed("enderman");
         ENDERMAN_FOLLOW_RANGE = BUILDER
                 .comment("Detection range (vanilla: 64)")
                 .translation("tantantools.config.mobcustomizer.endermanFollowRange")
@@ -183,9 +195,10 @@ public final class MobCustomizerConfig {
                 .translation("tantantools.config.mobcustomizer.allowWitchSpawn")
                 .define("allowSpawn", false);
         WITCH_SPAWN_RATE_PERCENT = BUILDER
-                .comment("Spawn amount, as a percentage of vanilla (1-300, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
+                .comment("Spawn amount, as a percentage of vanilla (1-1000, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
                 .translation("tantantools.config.mobcustomizer.witchSpawnRatePercent")
-                .defineInRange("spawnRatePercent", 100, 1, 300);
+                .defineInRange("spawnRatePercent", 100, 1, 1000);
+        WITCH_SPAWN_SPEED_PERCENT = spawnSpeed("witch");
         WITCH_FOLLOW_RANGE = BUILDER
                 .comment("Detection range (vanilla: 16)")
                 .translation("tantantools.config.mobcustomizer.witchFollowRange")
@@ -203,9 +216,10 @@ public final class MobCustomizerConfig {
                 .translation("tantantools.config.mobcustomizer.allowSlimeSpawn")
                 .define("allowSpawn", false);
         SLIME_SPAWN_RATE_PERCENT = BUILDER
-                .comment("Spawn amount, as a percentage of vanilla (1-300, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
+                .comment("Spawn amount, as a percentage of vanilla (1-1000, default 100). Below 100 = fewer mobs, above 100 = extra mobs spawn alongside each natural spawn")
                 .translation("tantantools.config.mobcustomizer.slimeSpawnRatePercent")
-                .defineInRange("spawnRatePercent", 100, 1, 300);
+                .defineInRange("spawnRatePercent", 100, 1, 1000);
+        SLIME_SPAWN_SPEED_PERCENT = spawnSpeed("slime");
         SLIME_FOLLOW_RANGE = BUILDER
                 .comment("Detection range (vanilla: 16)")
                 .translation("tantantools.config.mobcustomizer.slimeFollowRange")
@@ -223,5 +237,12 @@ public final class MobCustomizerConfig {
         SPEC = BUILDER.build();
     }
 
-    private MobCustomizerConfig() {}
+        private static ModConfigSpec.IntValue spawnSpeed(String mobName) {
+                return BUILDER
+                                .comment("Spawn speed multiplier as a percentage (1-1000, default 100)")
+                                .translation("tantantools.config.mobcustomizer." + mobName + "SpawnSpeedPercent")
+                                .defineInRange("spawnSpeedPercent", 100, 1, 1000);
+        }
+
+        private MobCustomizerConfig() {}
 }

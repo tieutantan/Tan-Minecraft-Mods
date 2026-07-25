@@ -14,11 +14,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public final class SpawnEventHandler {
 
-    // Max extra copies spawned alongside the original when spawnRatePercent > 100.
-    // 300% = up to 2 extra copies (3 total). Keeps runaway spawning bounded.
+    // Max extra copies spawned alongside the original when the effective rate > 100.
+    // Keep burst spawning bounded even when the configured percentages are high.
     private static final int MAX_EXTRA_SPAWNS = 2;
 
-    // Cached per-mob spawn rate (1-300). 100 = vanilla amount (subject to allowSpawn),
+    // Cached per-mob effective spawn rate (1-1000). 100 = vanilla amount (subject to allowSpawn),
     // <100 = a percentage chance the natural spawn is allowed, >100 = the natural spawn
     // is always allowed plus a chance of spawning extra copies alongside it.
     // Rebuilt on config change via refreshCache(). Array reference is swapped atomically
@@ -46,7 +46,7 @@ public final class SpawnEventHandler {
         boolean allAlwaysAllowed = true;
         for (int i = 0; i < count; i++) {
             MobConfigs.MobDef mob = MobConfigs.get(i);
-            int rate = mob.allowSpawn().get() ? mob.spawnRatePercent().get() : 0;
+            int rate = mob.allowSpawn().get() ? effectiveRate(mob) : 0;
             rates[i] = rate;
             if (rate != 100) {
                 allAlwaysAllowed = false;
@@ -71,6 +71,8 @@ public final class SpawnEventHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void onMobSpawn(FinalizeSpawnEvent event) {
+        if (event.getSpawnType() != EntitySpawnReason.NATURAL) return;
+
         // Ultra-fast path: every tracked mob spawns unconditionally → skip all checks
         if (allMobsAlwaysAllowed) return;
 
@@ -96,8 +98,13 @@ public final class SpawnEventHandler {
         }
     }
 
+    private static int effectiveRate(MobConfigs.MobDef mob) {
+        long combined = (long) mob.spawnRatePercent().get() * mob.spawnSpeedPercent().get();
+        return (int) Math.max(1, Math.min(1000, Math.round(combined / 100.0)));
+    }
+
     /**
-     * For spawnRatePercent > 100, rolls a chance per extra copy (100% = +1 guaranteed,
+    * For the effective rate > 100, rolls a chance per extra copy (100% = +1 guaranteed,
      * 200% = +1 guaranteed and a roll for +1 more, capped at MAX_EXTRA_SPAWNS).
      * Extra copies are created directly (bypassing finalizeSpawn/this event) to avoid
      * re-triggering FinalizeSpawnEvent recursively, and have their attributes applied
