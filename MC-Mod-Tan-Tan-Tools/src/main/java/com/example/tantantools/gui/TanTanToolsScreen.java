@@ -14,6 +14,12 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.narration.NarratableEntry;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.neoforged.neoforge.client.gui.widget.ScrollPanel;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -50,7 +56,8 @@ public final class TanTanToolsScreen extends Screen {
 
     private Tab currentTab;
     private final List<Button> menuButtons = new ArrayList<>();
-    private final List<net.minecraft.client.gui.components.AbstractWidget> contentWidgets = new ArrayList<>();
+    private final List<AbstractWidget> contentWidgets = new ArrayList<>();
+    private MobScrollPanel mobScrollPanel;
 
     // ===== Auto Delete tab state =====
     private EditBox adSearchBox;
@@ -126,14 +133,14 @@ public final class TanTanToolsScreen extends Screen {
         int btnY = this.height - 28;
         int groupWidth = 80 + 10 + 100;
         int startX = (this.width - groupWidth) / 2;
-        addContent(Button.builder(Component.literal("Back"), b -> returnToMenu())
+        contentWidgets.add(addRenderableWidget(Button.builder(Component.literal("Back"), b -> returnToMenu())
                 .pos(startX, btnY)
                 .size(80, 20)
-                .build());
-        addContent(Button.builder(Component.literal("Save & Close"), b -> onClose())
+            .build()));
+        contentWidgets.add(addRenderableWidget(Button.builder(Component.literal("Save & Close"), b -> onClose())
                 .pos(startX + 90, btnY)
                 .size(100, 20)
-                .build());
+            .build()));
     }
 
     private void returnToMenu() {
@@ -147,9 +154,18 @@ public final class TanTanToolsScreen extends Screen {
             this.removeWidget(w);
         }
         contentWidgets.clear();
+        if (mobScrollPanel != null) {
+            this.removeWidget(mobScrollPanel);
+        }
+        mobScrollPanel = null;
     }
 
-    private <T extends net.minecraft.client.gui.components.AbstractWidget> T addContent(T widget) {
+    private <T extends AbstractWidget> T addContent(T widget) {
+        if (mobScrollPanel != null) {
+            mobScrollPanel.addWidget(widget, widget.getX() - mobScrollPanel.getLeft(),
+                    widget.getY() - mobScrollPanel.getTop() - mobScrollPanel.getBorder());
+            return widget;
+        }
         contentWidgets.add(addRenderableWidget(widget));
         return widget;
     }
@@ -658,6 +674,11 @@ public final class TanTanToolsScreen extends Screen {
         int y = CONTENT_TOP;
         int rowH = 44;
 
+        mobScrollPanel = new MobScrollPanel(this.minecraft, this.width - 32, this.height - CONTENT_TOP - 40,
+            CONTENT_TOP, left);
+        addRenderableOnly(mobScrollPanel);
+        addWidget(mobScrollPanel);
+
         for (int i = 0; i < MobConfigs.count(); i++) {
             MobConfigs.MobDef mob = MobConfigs.get(i);
             final int idx = i;
@@ -680,6 +701,7 @@ public final class TanTanToolsScreen extends Screen {
                     "Both controls change by 100% per click and support 1-1000%. The runtime limits each natural " +
                     "spawn candidate to three mobs. Other settings can be adjusted in tan_tan_tools-mobcustomizer.toml"),
                 this.font).setMaxWidth(this.width - left * 2));
+        mobScrollPanel.setContentHeight(y + 36 - CONTENT_TOP);
     }
 
     private void saveMobCustomizerTab() {
@@ -692,6 +714,79 @@ public final class TanTanToolsScreen extends Screen {
         }
         MobCustomizerConfig.ALLOW_ZOMBIE_SPAWN.save();
         SpawnEventHandler.refreshCache();
+    }
+
+    private static final class MobScrollPanel extends ScrollPanel {
+        private final List<AbstractWidget> widgets = new ArrayList<>();
+        private final List<Integer> widgetX = new ArrayList<>();
+        private final List<Integer> widgetY = new ArrayList<>();
+        private int contentHeight;
+
+        private MobScrollPanel(net.minecraft.client.Minecraft minecraft, int width, int height, int top, int left) {
+            super(minecraft, width, height, top, left);
+        }
+
+        private void addWidget(AbstractWidget widget, int x, int y) {
+            widgets.add(widget);
+            widgetX.add(x);
+            widgetY.add(y);
+        }
+
+        private void setContentHeight(int contentHeight) {
+            this.contentHeight = contentHeight;
+        }
+
+        private int getLeft() {
+            return left;
+        }
+
+        private int getTop() {
+            return top;
+        }
+
+        private int getBorder() {
+            return border;
+        }
+
+        @Override
+        protected int getContentHeight() {
+            return contentHeight;
+        }
+
+        @Override
+        protected void drawPanel(GuiGraphicsExtractor guiGraphics, int entryRight, int relativeY,
+                                 int mouseX, int mouseY) {
+            for (int i = 0; i < widgets.size(); i++) {
+                AbstractWidget widget = widgets.get(i);
+                widget.setX(left + widgetX.get(i));
+                widget.setY(relativeY + widgetY.get(i));
+                widget.extractRenderState(guiGraphics, mouseX, mouseY, 0.0F);
+            }
+        }
+
+        @Override
+        public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+            for (int i = 0; i < widgets.size(); i++) {
+                AbstractWidget widget = widgets.get(i);
+                widget.setX(left + widgetX.get(i));
+                widget.setY(top + border + widgetY.get(i) - (int) scrollDistance);
+            }
+            return super.mouseClicked(event, doubleClick);
+        }
+
+        @Override
+        public List<? extends GuiEventListener> children() {
+            return widgets;
+        }
+
+        @Override
+        public NarratableEntry.NarrationPriority narrationPriority() {
+            return NarratableEntry.NarrationPriority.NONE;
+        }
+
+        @Override
+        public void updateNarration(NarrationElementOutput output) {
+        }
     }
 
     // ===================================================================
