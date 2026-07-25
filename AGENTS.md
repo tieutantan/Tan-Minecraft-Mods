@@ -68,8 +68,8 @@ buildable and distributable.
 Tan Tan Tools keeps feature implementations and configuration separate by
 feature. Preserve the existing per-feature config and command behavior, including
 `/tantantools mobcustom reload` where applicable. The shared settings screen is
-opened with `O`; follow the existing keybinding and screen registration patterns
-when adding client settings.
+opened from the `Tan Tan Tools` button in the ESC menu; follow the existing client
+screen registration patterns when adding client settings.
 
 Tan Gun's firing behavior is client-triggered but must preserve the existing
 server-safe gameplay and resource checks: Iron Nuggets are consumed in survival,

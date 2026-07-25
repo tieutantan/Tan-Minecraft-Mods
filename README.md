@@ -17,7 +17,7 @@ A collection of client-side/singleplayer Minecraft mods that automate gameplay a
 - Combine Enchanted Items — combine compatible enchanted items according to the feature settings
 - Cycle Trades Better — cycle villager trades more conveniently
 - Mob Customizer — enable or disable hostile mob spawning and adjust per-mob spawn rate and spawn speed percentages, plus attributes
-- Press **O** to open the shared Tan Tan Tools settings screen
+- Open the shared Tan Tan Tools settings screen from the **Tan Tan Tools** button in the ESC menu
 - The mod uses separate configuration files for each feature and supports `/tantantools mobcustom reload`
 
 ### 2️⃣ Tan Gun (`MC-Mod-Tan-Gun`)

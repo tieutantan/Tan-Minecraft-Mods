@@ -1,5 +1,5 @@
 {
-  "key.tan_tan_tools.open_settings": "Open Tan Tan Tools Settings",
+  "gui.tan_tan_tools.settings": "Tan Tan Tools",
 
   "tantantools.config.autodelete.enabled": "Enable Auto Delete",
   "tantantools.config.autodelete.deleteIntervalMinutes": "Delete Interval (minutes)",
