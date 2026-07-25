@@ -603,10 +603,41 @@ public final class TanTanToolsScreen extends Screen {
         return 0;
     }
 
+    private static int nextLowerPercent(int percent) {
+        return switch (percent) {
+            case 100 -> 1;
+            case 200 -> 100;
+            case 300 -> 200;
+            case 400 -> 300;
+            case 500 -> 400;
+            case 600 -> 500;
+            case 700 -> 600;
+            case 800 -> 700;
+            case 900 -> 800;
+            case 1000 -> 900;
+            default -> 1;
+        };
+    }
+
+    private static int nextHigherPercent(int percent) {
+        return switch (percent) {
+            case 1 -> 100;
+            case 100 -> 200;
+            case 200 -> 300;
+            case 300 -> 400;
+            case 400 -> 500;
+            case 500 -> 600;
+            case 600 -> 700;
+            case 700 -> 800;
+            case 800 -> 900;
+            case 900 -> 1000;
+            default -> 1000;
+        };
+    }
+
     private Button addMobPercentControl(String label, int x, int y, int[] values, Button[] buttons, int index) {
         addContent(Button.builder(Component.literal("-"), b -> {
-            int optionIndex = percentOptionIndex(values[index]);
-            values[index] = MOB_PERCENT_OPTIONS[Math.max(0, optionIndex - 1)];
+            values[index] = nextLowerPercent(values[index]);
             buttons[index].setMessage(Component.literal(label + ": " + rateLabel(values[index])));
         }).pos(x, y).size(20, 20).build());
 
@@ -615,8 +646,7 @@ public final class TanTanToolsScreen extends Screen {
             .pos(x + 24, y).size(72, 20).build());
 
         addContent(Button.builder(Component.literal("+"), b -> {
-            int optionIndex = percentOptionIndex(values[index]);
-            values[index] = MOB_PERCENT_OPTIONS[Math.min(MOB_PERCENT_OPTIONS.length - 1, optionIndex + 1)];
+            values[index] = nextHigherPercent(values[index]);
             buttons[index].setMessage(Component.literal(label + ": " + rateLabel(values[index])));
         }).pos(x + 100, y).size(20, 20).build());
 
