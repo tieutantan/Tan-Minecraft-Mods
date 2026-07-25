@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ItemStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.neoforged.api.distmarker.Dist;
@@ -19,6 +18,7 @@ public final class TanGunClient {
     private static boolean sentHeld;
     private static boolean firing;
     private static float shakePhase;
+    private static TanGunLoopSound gunshotSound;
 
     private TanGunClient() {
     }
@@ -26,6 +26,7 @@ public final class TanGunClient {
     @SubscribeEvent
     public static void onClientLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         sentHeld = false;
+        stopGunshotSound();
         firing = false;
         shakePhase = 0.0F;
     }
@@ -45,12 +46,30 @@ public final class TanGunClient {
             (minecraft.player.getAbilities().instabuild || hasAmmo(minecraft.player));
         if (shouldShake != firing) {
             firing = shouldShake;
+            if (firing) {
+                startGunshotSound(minecraft);
+            } else {
+                stopGunshotSound();
+            }
             if (!firing) {
                 shakePhase = 0.0F;
             }
         }
         if (firing) {
             shakePhase += 1.35F;
+        }
+    }
+
+    private static void startGunshotSound(Minecraft minecraft) {
+        stopGunshotSound();
+        gunshotSound = new TanGunLoopSound(minecraft.player);
+        minecraft.getSoundManager().play(gunshotSound);
+    }
+
+    private static void stopGunshotSound() {
+        if (gunshotSound != null) {
+            gunshotSound.stopPlaying();
+            gunshotSound = null;
         }
     }
 

@@ -1,0 +1,10 @@
+{
+  "gunshot": {
+    "sounds": [
+      {
+        "name": "tangun:gunshot",
+        "stream": true
+      }
+    ]
+  }
+}

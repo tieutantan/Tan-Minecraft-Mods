@@ -3,6 +3,7 @@ package com.tantn.tangun;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -18,8 +19,13 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class TanGun {
     public static final String MOD_ID = "tangun";
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MOD_ID);
+    public static final DeferredRegister<SoundEvent> SOUNDS =
+        DeferredRegister.create(Registries.SOUND_EVENT, MOD_ID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
         DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> GUNSHOT = SOUNDS.register("gunshot",
+        () -> SoundEvent.createVariableRangeEvent(id("gunshot")));
 
     public static final DeferredItem<TanGunItem> TAN_GUN = ITEMS.register("tan_gun",
         () -> new TanGunItem(new Item.Properties()
@@ -38,6 +44,7 @@ public final class TanGun {
 
     public TanGun(IEventBus modEventBus) {
         ITEMS.register(modEventBus);
+        SOUNDS.register(modEventBus);
         CREATIVE_TABS.register(modEventBus);
         modEventBus.addListener(TanGunPacket::register);
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.register(TanGunServer.class);

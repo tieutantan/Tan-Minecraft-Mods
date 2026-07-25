@@ -98,7 +98,6 @@ public final class TanGunItem extends Item {
         }
 
         spawnTracer(level, start, tracerEnd);
-        player.playSound(SoundEvents.GENERIC_EXPLODE.value(), 0.18F, 2.0F);
         return true;
     }
 
